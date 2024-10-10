@@ -6,13 +6,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,13 +35,37 @@ class MainActivity : ComponentActivity() {
                         onTestConnection = {
                             viewModel.helloWorld()
                         },
-                        onUploadImage = {
+                        onUploadImageMultipart = {
                             val file = File(cacheDir, "myImage.jpg")
                             file.createNewFile()
                             file.outputStream().use {
                                 assets.open("image.jpg").copyTo(it)
                             }
                             viewModel.uploadImage(file)
+                        },
+                        onUploadImageBody = {
+                            val file = File(cacheDir, "myImage.jpg")
+                            file.createNewFile()
+                            file.outputStream().use {
+                                assets.open("image.jpg").copyTo(it)
+                            }
+                            viewModel.uploadImage2(file)
+                        },
+                        onUploadImageParamsPrimitivesMultipart = {
+                            val file = File(cacheDir, "myImage.jpg")
+                            file.createNewFile()
+                            file.outputStream().use {
+                                assets.open("image.jpg").copyTo(it)
+                            }
+                            viewModel.uploadImage3(file)
+                        },
+                        onUploadImageParamsRequestBodyMultipart = {
+                            val file = File(cacheDir, "myImage.jpg")
+                            file.createNewFile()
+                            file.outputStream().use {
+                                assets.open("image.jpg").copyTo(it)
+                            }
+                            viewModel.uploadImage4(file)
                         }
                     )
                 }
@@ -55,7 +79,10 @@ fun Content(
     text: String?,
     modifier: Modifier,
     onTestConnection: () -> Unit,
-    onUploadImage: () -> Unit
+    onUploadImageMultipart: () -> Unit,
+    onUploadImageBody: () -> Unit,
+    onUploadImageParamsPrimitivesMultipart: () -> Unit,
+    onUploadImageParamsRequestBodyMultipart: () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -69,8 +96,17 @@ fun Content(
         Button(onClick = { onTestConnection() }) {
             Text(text = "Test connection")
         }
-        Button(onClick = { onUploadImage() }) {
-            Text(text = "Upload image")
+        Button(onClick = { onUploadImageMultipart() }) {
+            Text(text = "Upload image Multipart")
+        }
+        Button(onClick = { onUploadImageBody() }) {
+            Text(text = "Upload image Body")
+        }
+        Button(onClick = { onUploadImageParamsPrimitivesMultipart() }) {
+            Text(text = "Upload image Parameters as Primitives Multipart")
+        }
+        Button(onClick = { onUploadImageParamsRequestBodyMultipart() }) {
+            Text(text = "Upload image Parameters as RequestBody Multipart")
         }
     }
 }
@@ -84,7 +120,10 @@ fun GreetingPreview() {
                 text = "text",
                 modifier = Modifier.padding(innerPadding),
                 onTestConnection = {},
-                onUploadImage = {}
+                onUploadImageMultipart = {},
+                onUploadImageBody = {},
+                onUploadImageParamsPrimitivesMultipart = {},
+                onUploadImageParamsRequestBodyMultipart = {},
             )
         }
     }

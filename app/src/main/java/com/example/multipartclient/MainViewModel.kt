@@ -23,7 +23,25 @@ class MainViewModel(
 
     fun uploadImage(file: File) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.uploadImage(file)
+            _text.postValue(repository.uploadImage(file).toString())
+        }
+    }
+
+    fun uploadImage2(file: File) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _text.postValue(repository.uploadImage2(System.currentTimeMillis().toString(), file))
+        }
+    }
+
+    fun uploadImage3(file: File) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _text.postValue(repository.uploadImage3(System.currentTimeMillis().toString(), file))
+        }
+    }
+
+    fun uploadImage4(file: File) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _text.postValue(repository.uploadImage4(System.currentTimeMillis().toString(), file))
         }
     }
 }
