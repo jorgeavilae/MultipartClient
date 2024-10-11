@@ -75,6 +75,22 @@ class Repository {
         }
     }
 
+    suspend fun uploadTwoImages(message: String, file: File, file2: File): String? {
+        return try {
+            ApiService.instance.uploadTwoImages(
+                RequestBody.create("text/plain".toMediaTypeOrNull(), message),
+                MultipartBody.Part.createFormData("image", file.name, file.asRequestBody()),
+                MultipartBody.Part.createFormData("image2", file2.name, file2.asRequestBody())
+            ).body()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
+        } catch (e2: HttpException) {
+            e2.printStackTrace()
+            null
+        }
+    }
+
     suspend fun helloWorld(): String? {
         return try {
             ApiService.instance.helloWorld().body()

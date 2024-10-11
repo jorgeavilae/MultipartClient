@@ -66,6 +66,19 @@ class MainActivity : ComponentActivity() {
                                 assets.open("image.jpg").copyTo(it)
                             }
                             viewModel.uploadImage4(file)
+                        },
+                        onUploadTwoImagesMultipart = {
+                            val file = File(cacheDir, "myImage.jpg")
+                            file.createNewFile()
+                            file.outputStream().use {
+                                assets.open("image.jpg").copyTo(it)
+                            }
+                            val file2 = File(cacheDir, "myImage2.png")
+                            file2.createNewFile()
+                            file2.outputStream().use {
+                                assets.open("img.png").copyTo(it)
+                            }
+                            viewModel.uploadTwoImages(file, file2)
                         }
                     )
                 }
@@ -82,7 +95,8 @@ fun Content(
     onUploadImageMultipart: () -> Unit,
     onUploadImageBody: () -> Unit,
     onUploadImageParamsPrimitivesMultipart: () -> Unit,
-    onUploadImageParamsRequestBodyMultipart: () -> Unit
+    onUploadImageParamsRequestBodyMultipart: () -> Unit,
+    onUploadTwoImagesMultipart: () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -108,6 +122,9 @@ fun Content(
         Button(onClick = { onUploadImageParamsRequestBodyMultipart() }) {
             Text(text = "Upload image Parameters as RequestBody Multipart")
         }
+        Button(onClick = { onUploadTwoImagesMultipart() }) {
+            Text(text = "Upload 2 images Multipart")
+        }
     }
 }
 
@@ -124,6 +141,7 @@ fun GreetingPreview() {
                 onUploadImageBody = {},
                 onUploadImageParamsPrimitivesMultipart = {},
                 onUploadImageParamsRequestBodyMultipart = {},
+                onUploadTwoImagesMultipart = {},
             )
         }
     }

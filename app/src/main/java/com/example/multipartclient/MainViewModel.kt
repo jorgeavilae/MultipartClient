@@ -44,4 +44,14 @@ class MainViewModel(
             _text.postValue(repository.uploadImage4(System.currentTimeMillis().toString(), file))
         }
     }
+
+    fun uploadTwoImages(file: File, file2: File) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _text.postValue(repository.uploadTwoImages(
+                System.currentTimeMillis().toString(),
+                file,
+                file2
+            ))
+        }
+    }
 }

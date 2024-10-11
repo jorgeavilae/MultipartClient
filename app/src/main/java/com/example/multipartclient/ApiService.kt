@@ -41,6 +41,14 @@ interface ApiService {
         @Part image: MultipartBody.Part
     ): Response<String>
 
+    @Multipart
+    @POST("/file2")
+    suspend fun uploadTwoImages(
+        @Part("message") message: RequestBody,
+        @Part image: MultipartBody.Part,
+        @Part image2: MultipartBody.Part
+    ): Response<String>
+
     @GET("/")
     suspend fun helloWorld(): Response<String>
 
